@@ -137,11 +137,16 @@ Afolder is creater where the /mnt/apps is mounted which carries all apps .
 
 df -h shows id wthe mounting was successful
 
+![image](https://github.com/NANA-2016/DEVOPS-TOOLING/assets/141503408/38894041-abf2-4194-97f1-afc2cd3d00a6)
+
 sudo vi /etc/fstab
-later a configuratin on the file etc/fstab is made using the NSF server private ip adderess.
+
+later a configuration on the file etc/fstab is made using the NSF server private ip adderess.
  
 sudo vi /etc/fstab ( command )
 <NFS-Server-Private-IP-Address>:/mnt/apps /var/www nfs defaults 0 0 ( configuration on the etc/fstab file which is directly cpoied in to the file on vi)
+
+![image](https://github.com/NANA-2016/DEVOPS-TOOLING/assets/141503408/b130817b-c672-4c73-95fa-72639070bfb6)
 
 
 ## REMI REPOSITORY COMMANDS 
@@ -166,32 +171,66 @@ setsebool -P httpd_execmem 1
 
  All ythe above are run in all the three servers.
 
-  To ensure everything is working check if the apache files in WEBSERVER ARE ALSO IN ALL THE THTREE SERVERS.
+## NFS SERVER AND NFS CLIENT FILES TALLYING
+  To ensure everything is working checkif the content of /var/www in the webservers is same as in the /mnt/apps in the nfs server.
 
   IN server 1 text.txt
-  server2 text.txt 2
-  server 3 text.txt 3 are expected to be seen on he NFS swerver as well as the webservers.
+  
+  ![image](https://github.com/NANA-2016/DEVOPS-TOOLING/assets/141503408/64c8ef69-74e3-41cb-a8e4-71bc8704e895)
 
-   ALL WEB SERVERS ARE ACCESSIBLE THROUGH PORT 80
+  server2 text.txt 1
+  
+  ![image](https://github.com/NANA-2016/DEVOPS-TOOLING/assets/141503408/bf134cab-7ed5-48fe-8419-1de7b9020544)
+
+  
+  server 3 text.txt 2 are expected to be seen on he NFS swerver as well as the webservers.
+  
+  ![image](https://github.com/NANA-2016/DEVOPS-TOOLING/assets/141503408/400619a0-2354-4fc0-b95b-0fabf0bd0a9b)
+
+  NFS server  /mnt/apps folder
+  
+  ![image](https://github.com/NANA-2016/DEVOPS-TOOLING/assets/141503408/4347e2a1-ca00-431e-8f9a-a40881a3f004)
+
+
+   ** ALL WEB SERVERS ARE ACCESSIBLE THROUGH PORT 80 **
 
    Forking the tooling website fron the website  is the next step  where git is installed and git clonning done as shown below on all webservers [https://github.com/darey-io/tooling.git]
+
+   ![image](https://github.com/NANA-2016/DEVOPS-TOOLING/assets/141503408/f2036f83-f66a-4b0e-8dee-ef37cd1cf092)
+
    
        the next step is to deploy  tooling website code in to var/www/html foldrer
+       
+       ![image](https://github.com/NANA-2016/DEVOPS-TOOLING/assets/141503408/f56e08e8-b8eb-4ecf-b0d4-ff27898a0981)
 
-    For the webserver to run smothel we need to disable selinux and set it to disabled on setenforce 0
-     using the coomand /etc/sysconfig/selinux and restart httpd
+    For the webserver to run smoothely we need to disable selinux and set it to disabled on setenforce 0
+    
+     using the coomand /etc/sysconfig/selinux and restart httpd     
 
-      install my sql client ansd use the database server  to be able to access the database serve in tooling database. created earlier.
+     ![image](https://github.com/NANA-2016/DEVOPS-TOOLING/assets/141503408/02a23e77-084f-44ce-9da5-6ea5c0d5b43a)
+
+     Install my sql client ansd use the database server  to be able to access the database serve in tooling database. created earlier.
 sudo yum install mysql -y
 
  cd tooling
  mysql -h 172.31.34.136 -u webaccess -p tooling <tooling-db.sql
+ 
+## ACCESS TO THE WEB
 
- Now you can access the website using the public ip adresses of the three webservers.
+ Now you can access the website using the public ip adresses of the three webservers
+
+http<webserver public ipa adress>/index.php
+
+ 18.130.181.54 public ip adress of client 3
+ 
+ ![image](https://github.com/NANA-2016/DEVOPS-TOOLING/assets/141503408/78a3539a-c912-4a4f-b6e1-f68d7ab1d34f)
 
 
-    
-
+35.178.194.2 public ip adress of nfs client 2
+ ![image](https://github.com/NANA-2016/DEVOPS-TOOLING/assets/141503408/d6983315-7629-4b66-b8e3-3878255852d3)
+   
+13.43.88.143 nfs client 1 
+![image](https://github.com/NANA-2016/DEVOPS-TOOLING/assets/141503408/215034f3-9f6b-4374-ba90-9ee522cad934)
 
   
 
